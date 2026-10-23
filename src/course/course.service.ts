@@ -1,32 +1,63 @@
+
 import { Injectable } from '@nestjs/common';
+import { CreateCourseDto } from './dto/create-course.dto';
+import { UpdateCourseDto } from './dto/update-course.dto';
 
 @Injectable()
 export class CourseService {
-    getAllCourses(){
-        return "all courses from service";
-
-    }
-    getCourseById(id:string){
-        return `course id form service ${id}`;
-
-    }
-    createCourse(){
-        return `course created from service`;
-
-
-    }
-updateCourse(id:string){
-    return `course updated from service ${id}`;
-
-
-
-}
-  patchCourse(id: string) {
-    return `patch course ${id} from service`;
+  getAllCourses() {
+    return {
+      message: 'All courses fetched successfully',
+      data: [],
+    };
   }
+
+  getCourseById(id: string) {
+    return {
+      message: 'Course fetched successfully',
+      id,
+    };
+  }
+
+  createCourse(dto: CreateCourseDto) {
+    return {
+      message: 'Course created successfully',
+      data: dto,
+    };
+  }
+
+  updateCourse(id: string, dto: UpdateCourseDto) {
+    return {
+      message: 'Course updated successfully',
+      id,
+      data: dto,
+    };
+  }
+
+  patchCourse(id: string, dto: UpdateCourseDto) {
+    return {
+      message: 'Course patched successfully',
+      id,
+      updatedFields: Object.keys(dto),
+    };
+  }
+
   deleteCourse(id: string) {
-    return `Delete course ${id} from Service`;
+    return {
+      message: 'Course deleted successfully',
+      id,
+    };
   }
 
-
+  uploadCourseMaterial(
+    id: string,
+    file: Express.Multer.File,
+  ) {
+    return {
+      message: 'Material uploaded successfully',
+      courseId: id,
+      filename: file.filename,
+      path: `uploads/${file.filename}`,
+    };
+  }
 }
